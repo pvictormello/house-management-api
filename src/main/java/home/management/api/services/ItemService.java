@@ -39,4 +39,8 @@ public class ItemService {
     public List<Item> getItemsByRoomId(UUID roomId) {
         return itemRepository.findByRoomId(roomId);
     }
+
+    public void deleteAllItems() {
+        itemRepository.deleteAll();
+    }
 }

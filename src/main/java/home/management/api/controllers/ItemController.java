@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,12 +24,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/items")
-public class ItemsController {
+public class ItemController {
 
     private final ItemService itemService;
     private final RoomService roomService;
 
-    public ItemsController(ItemService itemService, RoomService roomService) {
+    public ItemController(ItemService itemService, RoomService roomService) {
         this.itemService = itemService;
         this.roomService = roomService;
     }
@@ -59,5 +60,22 @@ public class ItemsController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @DeleteMapping("/{itemId}")
+    public ResponseEntity<Void> deleteItem(@PathVariable UUID itemId) {
+        Item item = itemService.getItemById(itemId);
+        if (item != null) {
+            itemService.deleteItem(itemId);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAll() {
+        itemService.deleteAllItems();
+        return ResponseEntity.ok().build();
     }
 }
