@@ -8,8 +8,8 @@ import home.management.api.services.RoomService;
 import jakarta.validation.Valid;
 
 import java.util.List;
-import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +32,7 @@ public class RoomController {
 
         roomService.saveRoom(new Room(request));
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
@@ -40,9 +40,15 @@ public class RoomController {
         return ResponseEntity.ok(roomService.getAllRooms());
     }
 
-    @GetMapping("/room/{roomId}")
-    public ResponseEntity<Room> getRoomById(@PathVariable UUID roomId) {
-        return ResponseEntity.ok(roomService.getRoomById(roomId));
+    @GetMapping("/{slug}")
+    public ResponseEntity<Room> getRoomBySlug(@PathVariable String slug) {
+        Room room = roomService.getRoomBySlug(slug);
+        if (room != null) {
+            return ResponseEntity.ok(room);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+    
 
 }

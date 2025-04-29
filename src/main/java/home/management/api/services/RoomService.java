@@ -35,4 +35,8 @@ public class RoomService {
     public void updateRoom(Room room) {
         roomRepository.save(room);
     }
+
+    public Room getRoomBySlug(String slug) {
+        return roomRepository.findBySlug(slug);
+    }
 }

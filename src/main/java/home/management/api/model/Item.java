@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import home.management.api.dto.ItemsRequest;
 import home.management.api.model.enums.Priority;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,9 +28,9 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id", referencedColumnName = "id")
-    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
+    @JsonProperty("room_id")
     private Room room;
 
     @NotNull
@@ -47,7 +48,7 @@ public class Item {
     private Boolean isPurchased;
 
     @JsonProperty("purchase_options")
-    @OneToMany(mappedBy = "item" ,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PurchaseOption> purchaseOptions;
 
     public Item() {
@@ -67,6 +68,11 @@ public class Item {
         this.description = request.getDescription();
         this.priority = request.getPriority();
         this.isPurchased = false;
+    }
+
+    @JsonProperty("room_id")
+    public UUID getRoomId() {
+        return room != null ? room.getId() : null;
     }
 
     public UUID getId() {

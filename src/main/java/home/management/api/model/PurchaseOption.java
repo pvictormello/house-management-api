@@ -2,7 +2,6 @@ package home.management.api.model;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -21,11 +20,6 @@ public class PurchaseOption {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", referencedColumnName = "id")
-    @JsonIgnore
-    private Item item;
-
     @Column(name = "url", columnDefinition = "TEXT")
     private String url;
 
@@ -36,6 +30,10 @@ public class PurchaseOption {
     @Column(name = "is_favorite")
     @JsonProperty("is_favorite")
     private Boolean isFavorite;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
+    private Item item;
 
     public PurchaseOption() {
     }

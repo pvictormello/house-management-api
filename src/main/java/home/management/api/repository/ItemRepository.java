@@ -11,6 +11,6 @@ import home.management.api.model.Item;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, UUID> {
 
-    List<Item> findByRoomId(UUID roomId);
+    List<Item> findByRoom_Id(UUID roomId);
     // You can define custom query methods here if needed
 }

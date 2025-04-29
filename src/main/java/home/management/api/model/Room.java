@@ -3,11 +3,13 @@ package home.management.api.model;
 import java.util.List;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import home.management.api.dto.RoomRequest;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,9 +24,12 @@ public class Room {
     private UUID id;
     private String name;
 
-    @OneToMany(mappedBy = "room")
-    @JsonIgnore
+    @Column(name = "slug", columnDefinition = "TEXT", insertable = false, updatable = false)
+    private String slug;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Item> items;
+
 
     public Room() {
     }
@@ -64,5 +69,13 @@ public class Room {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 }
