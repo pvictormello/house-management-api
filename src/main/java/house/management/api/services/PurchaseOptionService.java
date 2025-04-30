@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import house.management.api.model.PurchaseOption;
 import house.management.api.repository.PurchaseOptionRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class PurchaseOptionService {
@@ -35,5 +36,20 @@ public class PurchaseOptionService {
 
     public void updatePurchaseOption(PurchaseOption purchaseOption) {
         purchaseOptionRepository.save(purchaseOption);
+    }
+
+    public List<PurchaseOption> getPurchaseOptionsByItemId(UUID itemId) {
+        return purchaseOptionRepository.findByItem_Id(itemId);
+    }
+
+    @Transactional
+    public void unmarkFavoritePurchaseOptionPerItem(UUID itemId){
+        List<PurchaseOption> purchaseOptions = purchaseOptionRepository.findByItem_Id(itemId);
+        purchaseOptions.stream()
+            .filter(PurchaseOption::getIsFavorite)
+            .forEach(purchaseOption -> {
+                purchaseOption.setIsFavorite(false);
+                purchaseOptionRepository.save(purchaseOption);
+            });
     }
 }

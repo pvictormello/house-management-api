@@ -2,18 +2,17 @@ package house.management.api.dto;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import house.management.api.model.enums.Priority;
 import jakarta.validation.constraints.NotBlank;
 
 public class ItemsRequest {
 
-    @JsonProperty("room_id")
+    @NotBlank(message = "Room ID cannot be empty")
     private UUID roomId;
     @NotBlank(message = "Name cannot be empty")
     private String name;
     private String description;
+    @NotBlank(message = "Priority cannot be empty")
     private Priority priority;
 
     public ItemsRequest() {

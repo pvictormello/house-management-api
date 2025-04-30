@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import house.management.api.dto.PurchaseOptionRequest;
 import jakarta.persistence.Column;
@@ -28,11 +27,8 @@ public class PurchaseOption {
 
     @Column(name = "price", columnDefinition = "NUMERIC(10,2)", nullable = false)
     private BigDecimal price;
-
-    private String label;
     
     @Column(name = "is_favorite", nullable = false)
-    @JsonProperty("is_favorite")
     private Boolean isFavorite;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,12 +39,11 @@ public class PurchaseOption {
     public PurchaseOption() {
     }
 
-    public PurchaseOption(UUID id, Item item, String url, BigDecimal price, String label, Boolean isFavorite) {
+    public PurchaseOption(UUID id, Item item, String url, BigDecimal price, Boolean isFavorite) {
         this.id = id;
         this.item = item;
         this.url = url;
         this.price = price;
-        this.label = label;
         this.isFavorite = isFavorite;
     }
 
@@ -56,7 +51,6 @@ public class PurchaseOption {
         this.item = item;
         this.url = request.getUrl();
         this.price = request.getPrice();
-        this.label = request.getLabel();
         this.isFavorite = false;
     }
 
@@ -90,14 +84,6 @@ public class PurchaseOption {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     public Boolean getIsFavorite() {

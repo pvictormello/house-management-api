@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import house.management.api.dto.ItemsRequest;
 import house.management.api.model.enums.Priority;
@@ -45,11 +44,9 @@ public class Item {
     private Priority priority;
 
     @Column(name = "is_purchased")
-    @JsonProperty("is_purchased")
     private Boolean isPurchased;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonProperty("purchase_options")
     private List<PurchaseOption> purchaseOptions;
 
     public Item() {
