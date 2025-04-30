@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import house.management.api.dto.ItemsRequest;
 import house.management.api.model.Item;
 import house.management.api.model.Room;
+import house.management.api.model.dto.ItemsRequest;
 import house.management.api.services.ItemService;
 import house.management.api.services.RoomService;
 import jakarta.validation.Valid;

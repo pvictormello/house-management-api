@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import house.management.api.dto.ItemsRequest;
+import house.management.api.model.dto.ItemsRequest;
 import house.management.api.model.enums.Priority;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

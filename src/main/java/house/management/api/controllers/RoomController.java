@@ -2,8 +2,8 @@ package house.management.api.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import house.management.api.dto.RoomRequest;
 import house.management.api.model.Room;
+import house.management.api.model.dto.RoomRequest;
 import house.management.api.services.RoomService;
 import jakarta.validation.Valid;
 

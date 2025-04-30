@@ -3,9 +3,9 @@ package house.management.api.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import house.management.api.dto.PurchaseOptionRequest;
 import house.management.api.model.Item;
 import house.management.api.model.PurchaseOption;
+import house.management.api.model.dto.PurchaseOptionRequest;
 import house.management.api.services.ItemService;
 import house.management.api.services.PurchaseOptionService;
 import jakarta.validation.Valid;

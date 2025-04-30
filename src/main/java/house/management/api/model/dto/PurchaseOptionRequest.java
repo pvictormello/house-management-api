@@ -1,4 +1,4 @@
-package house.management.api.dto;
+package house.management.api.model.dto;
 
 import java.math.BigDecimal;
 import java.util.UUID;
