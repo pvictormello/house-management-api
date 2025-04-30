@@ -1,10 +1,10 @@
-package home.management.api.dto;
+package house.management.api.dto;
 
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import home.management.api.model.enums.Priority;
+import house.management.api.model.enums.Priority;
 import jakarta.validation.constraints.NotBlank;
 
 public class ItemsRequest {

@@ -1,4 +1,4 @@
-package home.management.api;
+package house.management.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

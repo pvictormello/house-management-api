@@ -1,4 +1,4 @@
-package home.management.api.config;
+package house.management.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

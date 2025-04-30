@@ -1,4 +1,4 @@
-package home.management.api.controllers;
+package house.management.api.controllers;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import home.management.api.dto.ItemsRequest;
-import home.management.api.model.Item;
-import home.management.api.model.Room;
-import home.management.api.services.ItemService;
-import home.management.api.services.RoomService;
+import house.management.api.dto.ItemsRequest;
+import house.management.api.model.Item;
+import house.management.api.model.Room;
+import house.management.api.services.ItemService;
+import house.management.api.services.RoomService;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;

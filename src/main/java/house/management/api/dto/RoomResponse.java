@@ -1,9 +1,9 @@
-package home.management.api.dto;
+package house.management.api.dto;
 
 import java.util.List;
 
-import home.management.api.model.Item;
-import home.management.api.model.Room;
+import house.management.api.model.Item;
+import house.management.api.model.Room;
 
 public class RoomResponse {
     private String name;

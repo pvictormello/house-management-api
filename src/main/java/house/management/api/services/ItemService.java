@@ -1,12 +1,12 @@
-package home.management.api.services;
+package house.management.api.services;
 
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import home.management.api.model.Item;
-import home.management.api.repository.ItemRepository;
+import house.management.api.model.Item;
+import house.management.api.repository.ItemRepository;
 
 @Service
 public class ItemService {

@@ -1,9 +1,12 @@
-package home.management.api.model;
+package house.management.api.model;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import house.management.api.dto.PurchaseOptionRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,31 +23,41 @@ public class PurchaseOption {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "url", columnDefinition = "TEXT")
+    @Column(name = "url", columnDefinition = "TEXT", nullable = false)
     private String url;
 
-    @Column(name = "price", columnDefinition = "NUMERIC(10,2)")
-    private Number price;
+    @Column(name = "price", columnDefinition = "NUMERIC(10,2)", nullable = false)
+    private BigDecimal price;
+
     private String label;
     
-    @Column(name = "is_favorite")
+    @Column(name = "is_favorite", nullable = false)
     @JsonProperty("is_favorite")
     private Boolean isFavorite;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", referencedColumnName = "id")
+    @JsonIgnore
     private Item item;
 
     public PurchaseOption() {
     }
 
-    public PurchaseOption(UUID id, Item item, String url, Number price, String label, Boolean isFavorite) {
+    public PurchaseOption(UUID id, Item item, String url, BigDecimal price, String label, Boolean isFavorite) {
         this.id = id;
         this.item = item;
         this.url = url;
         this.price = price;
         this.label = label;
         this.isFavorite = isFavorite;
+    }
+
+    public PurchaseOption(PurchaseOptionRequest request, Item item) {
+        this.item = item;
+        this.url = request.getUrl();
+        this.price = request.getPrice();
+        this.label = request.getLabel();
+        this.isFavorite = false;
     }
 
     public UUID getId() {
@@ -71,11 +84,11 @@ public class PurchaseOption {
         this.url = url;
     }
 
-    public Number getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Number price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

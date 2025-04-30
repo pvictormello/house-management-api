@@ -1,10 +1,10 @@
-package home.management.api.repository;
+package house.management.api.repository;
 
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import home.management.api.model.PurchaseOption;
+import house.management.api.model.PurchaseOption;
 
 @Repository
 public interface PurchaseOptionRepository extends JpaRepository<PurchaseOption, UUID> {

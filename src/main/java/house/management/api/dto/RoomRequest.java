@@ -1,4 +1,4 @@
-package home.management.api.dto;
+package house.management.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

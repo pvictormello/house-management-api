@@ -1,12 +1,12 @@
-package home.management.api.services;
+package house.management.api.services;
 
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import home.management.api.model.Room;
-import home.management.api.repository.RoomRepository;
+import house.management.api.model.Room;
+import house.management.api.repository.RoomRepository;
 
 @Service
 public class RoomService {

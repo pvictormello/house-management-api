@@ -1,4 +1,4 @@
-package home.management.api.model.enums;
+package house.management.api.model.enums;
 
 public enum Priority {
     low,

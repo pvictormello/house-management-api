@@ -1,12 +1,13 @@
-package home.management.api.model;
+package house.management.api.model;
 
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import home.management.api.dto.ItemsRequest;
-import home.management.api.model.enums.Priority;
+import house.management.api.dto.ItemsRequest;
+import house.management.api.model.enums.Priority;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +31,7 @@ public class Item {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
-    @JsonProperty("room_id")
+    @JsonIgnore
     private Room room;
 
     @NotNull
@@ -47,8 +48,8 @@ public class Item {
     @JsonProperty("is_purchased")
     private Boolean isPurchased;
 
-    @JsonProperty("purchase_options")
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonProperty("purchase_options")
     private List<PurchaseOption> purchaseOptions;
 
     public Item() {
@@ -68,11 +69,6 @@ public class Item {
         this.description = request.getDescription();
         this.priority = request.getPriority();
         this.isPurchased = false;
-    }
-
-    @JsonProperty("room_id")
-    public UUID getRoomId() {
-        return room != null ? room.getId() : null;
     }
 
     public UUID getId() {
