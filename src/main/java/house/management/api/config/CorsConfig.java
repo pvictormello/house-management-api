@@ -12,10 +12,10 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true); // Allow credentials (optional)
-        config.addAllowedOrigin("http://localhost:3000"); // Allow all origins
+        config.addAllowedOriginPattern("*"); // Allow all origins
         config.addAllowedHeader("*"); // Allow all headers
         config.addAllowedMethod("*"); // Allow all HTTP methods
+        config.setAllowCredentials(true); // Allow credentials (optional)
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config); // Apply CORS settings to all endpoints
