@@ -69,7 +69,7 @@ public class ItemController {
     }
 
     @PutMapping("/{itemId}")
-    public ResponseEntity<Void> putMethodName(@PathVariable UUID itemId, @RequestBody ItemRequest request) {
+    public ResponseEntity<Void> updateItem(@PathVariable UUID itemId, @RequestBody ItemRequest request) {
         Item item = itemService.getItemById(itemId);
 
         if(item == null) {
