@@ -4,9 +4,9 @@ import java.util.UUID;
 
 import house.management.api.model.enums.Priority;
 
-public record ItemsRequest(UUID roomId, String name, String description, Priority priority) {
+public record ItemRequest(UUID roomId, String name, String description, Priority priority) {
 
-    public ItemsRequest {
+    public ItemRequest {
         if (roomId == null) {
             throw new IllegalArgumentException("Room ID cannot be null");
         }

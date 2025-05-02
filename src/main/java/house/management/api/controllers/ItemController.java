@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import house.management.api.model.Item;
 import house.management.api.model.Room;
-import house.management.api.model.dto.ItemsRequest;
+import house.management.api.model.dto.ItemRequest;
 import house.management.api.services.ItemService;
 import house.management.api.services.RoomService;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/items")
@@ -33,7 +35,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveItem(@Valid @RequestBody ItemsRequest request) {
+    public ResponseEntity<Void> saveItem(@Valid @RequestBody ItemRequest request) {
         Room room = roomService.getRoomById(request.getRoomId());
 
         Item itemToSave = new Item(request);
@@ -63,6 +65,28 @@ public class ItemController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{itemId}")
+    public ResponseEntity<Void> putMethodName(@PathVariable UUID itemId, @RequestBody ItemRequest request) {
+        Item item = itemService.getItemById(itemId);
+
+        if(item == null) {
+            return ResponseEntity.notFound().build();
+        } else{
+            Item itemToUpdate = new Item(request);
+            Room room = roomService.getRoomById(request.getRoomId());
+
+            if(room == null){
+                return ResponseEntity.notFound().build();
+            }
+            itemToUpdate.setId(itemId);
+            itemToUpdate.setRoom(room);
+            itemToUpdate.setIsPurchased(item.getIsPurchased());
+            itemService.updateItem(itemToUpdate);
+
+            return ResponseEntity.ok().build();
         }
     }
 }

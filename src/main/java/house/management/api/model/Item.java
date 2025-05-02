@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import house.management.api.model.dto.ItemsRequest;
+import house.management.api.model.dto.ItemRequest;
 import house.management.api.model.enums.Priority;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -61,11 +61,10 @@ public class Item {
         this.isPurchased = isPurchased;
     }
 
-    public Item(ItemsRequest request) {
+    public Item(ItemRequest request) {
         this.name = request.getName();
         this.description = request.getDescription();
         this.priority = request.getPriority();
-        this.isPurchased = false;
     }
 
     public UUID getId() {
