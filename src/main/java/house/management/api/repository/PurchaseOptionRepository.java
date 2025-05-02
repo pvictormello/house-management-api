@@ -9,6 +9,5 @@ import house.management.api.model.PurchaseOption;
 
 @Repository
 public interface PurchaseOptionRepository extends JpaRepository<PurchaseOption, UUID> {
-
-    List<PurchaseOption> findByItem_Id(UUID itemId); // Assuming you have an Item entity with a UUID id field
+    List<PurchaseOption> findByItem_Id(UUID itemId);
 }

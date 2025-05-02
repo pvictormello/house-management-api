@@ -28,19 +28,7 @@ public class ItemService {
         itemRepository.deleteById(id);
     }
 
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
-    }
-
     public void updateItem(Item item) {
         itemRepository.save(item);
-    }
-
-    public List<Item> getItemsByRoomId(UUID roomId) {
-        return itemRepository.findByRoom_Id(roomId);
-    }
-
-    public void deleteAllItems() {
-        itemRepository.deleteAll();
     }
 }

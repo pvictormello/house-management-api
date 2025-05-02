@@ -62,7 +62,7 @@ public class PurchaseOptionController {
         PurchaseOption purchaseOption = purchaseOptionService.getPurchaseOptionById(purchaseOptionId);
         if (purchaseOption != null) {
             purchaseOptionService.deletePurchaseOption(purchaseOption.getId());
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }

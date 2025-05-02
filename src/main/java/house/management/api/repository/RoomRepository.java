@@ -8,6 +8,5 @@ import house.management.api.model.Room;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, UUID> {
-    // You can define custom query methods here if needed
     Room findBySlug(String slug);
 }

@@ -1,12 +1,10 @@
 package house.management.api.controllers;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +30,6 @@ public class ItemController {
     public ItemController(ItemService itemService, RoomService roomService) {
         this.itemService = itemService;
         this.roomService = roomService;
-    }
-
-    @GetMapping
-    public List<Item> getAllItems() {
-        return itemService.getAllItems();
     }
 
     @PostMapping
@@ -67,15 +60,9 @@ public class ItemController {
         Item item = itemService.getItemById(itemId);
         if (item != null) {
             itemService.deleteItem(itemId);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @DeleteMapping
-    public ResponseEntity<Void> deleteAll() {
-        itemService.deleteAllItems();
-        return ResponseEntity.ok().build();
     }
 }

@@ -10,6 +10,5 @@ import house.management.api.model.Item;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, UUID> {
-
     List<Item> findByRoom_Id(UUID roomId);
 }

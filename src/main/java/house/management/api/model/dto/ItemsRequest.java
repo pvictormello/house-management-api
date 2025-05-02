@@ -3,26 +3,19 @@ package house.management.api.model.dto;
 import java.util.UUID;
 
 import house.management.api.model.enums.Priority;
-import jakarta.validation.constraints.NotBlank;
 
-public class ItemsRequest {
+public record ItemsRequest(UUID roomId, String name, String description, Priority priority) {
 
-    @NotBlank(message = "Room ID cannot be empty")
-    private UUID roomId;
-    @NotBlank(message = "Name cannot be empty")
-    private String name;
-    private String description;
-    @NotBlank(message = "Priority cannot be empty")
-    private Priority priority;
-
-    public ItemsRequest() {
-    }
-
-    public ItemsRequest(UUID roomId, String name, String description, Priority priority) {
-        this.roomId = roomId;
-        this.name = name;
-        this.description = description;
-        this.priority = priority;
+    public ItemsRequest {
+        if (roomId == null) {
+            throw new IllegalArgumentException("Room ID cannot be null");
+        }
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be null or blank");
+        }
+        if (priority == null) {
+            throw new IllegalArgumentException("Priority cannot be null");
+        }
     }
 
     public UUID getRoomId() {

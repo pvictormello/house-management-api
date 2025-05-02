@@ -38,10 +38,6 @@ public class PurchaseOptionService {
         purchaseOptionRepository.save(purchaseOption);
     }
 
-    public List<PurchaseOption> getPurchaseOptionsByItemId(UUID itemId) {
-        return purchaseOptionRepository.findByItem_Id(itemId);
-    }
-
     @Transactional
     public void unmarkFavoritePurchaseOptionPerItem(UUID itemId){
         List<PurchaseOption> purchaseOptions = purchaseOptionRepository.findByItem_Id(itemId);
