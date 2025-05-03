@@ -3,8 +3,6 @@ package house.management.api.model;
 import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.annotations.GeneratedColumn;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import house.management.api.model.dto.RoomRequest;

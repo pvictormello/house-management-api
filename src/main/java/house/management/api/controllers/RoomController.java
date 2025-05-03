@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import house.management.api.model.Room;
 import house.management.api.model.dto.RoomRequest;
 import house.management.api.services.RoomService;
-import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.UUID;
