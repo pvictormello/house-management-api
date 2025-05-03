@@ -34,14 +34,17 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveItem(@RequestBody ItemRequest request) {
+    public ResponseEntity<Item> saveItem(@RequestBody ItemRequest request) {
         Room room = roomService.getRoomById(request.getRoomId());
+
+        if (room == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
 
         Item itemToSave = new Item(request);
         itemToSave.setRoom(room);
-
-        itemService.saveItem(itemToSave);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.saveItem(itemToSave));
     }
 
     @PatchMapping("/{itemId}/toggle-purchased")

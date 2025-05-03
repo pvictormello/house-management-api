@@ -15,8 +15,8 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public void saveItem(Item item) {
-        itemRepository.save(item);
+    public Item saveItem(Item item) {
+        return itemRepository.save(item);
     }
 
     public Item getItemById(UUID id) {

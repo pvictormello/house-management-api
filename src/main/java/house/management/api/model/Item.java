@@ -65,6 +65,7 @@ public class Item {
         this.name = request.getName();
         this.description = request.getDescription();
         this.priority = request.getPriority();
+        this.isPurchased = false;
     }
 
     public UUID getId() {
