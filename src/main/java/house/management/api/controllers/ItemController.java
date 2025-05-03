@@ -15,7 +15,6 @@ import house.management.api.model.Room;
 import house.management.api.model.dto.ItemRequest;
 import house.management.api.services.ItemService;
 import house.management.api.services.RoomService;
-import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +34,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveItem(@Valid @RequestBody ItemRequest request) {
+    public ResponseEntity<Void> saveItem(@RequestBody ItemRequest request) {
         Room room = roomService.getRoomById(request.getRoomId());
 
         Item itemToSave = new Item(request);

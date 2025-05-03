@@ -36,15 +36,19 @@ public class PurchaseOption {
     @JsonIgnore
     private Item item;
 
+    @Column(name = "image_url", columnDefinition = "TEXT")
+    private String imageUrl;
+
     public PurchaseOption() {
     }
 
-    public PurchaseOption(UUID id, Item item, String url, BigDecimal price, Boolean isFavorite) {
+    public PurchaseOption(UUID id, Item item, String url, BigDecimal price, Boolean isFavorite, String imageUrl) {
         this.id = id;
         this.item = item;
         this.url = url;
         this.price = price;
         this.isFavorite = isFavorite;
+        this.imageUrl = imageUrl;
     }
 
     public PurchaseOption(PurchaseOptionRequest request, Item item) {
@@ -92,5 +96,13 @@ public class PurchaseOption {
 
     public void setIsFavorite(Boolean isFavorite) {
         this.isFavorite = isFavorite;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

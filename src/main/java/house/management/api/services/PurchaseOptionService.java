@@ -18,8 +18,8 @@ public class PurchaseOptionService {
         this.purchaseOptionRepository = purchaseOptionRepository;
     }
 
-    public void savePurchaseOption(PurchaseOption purchaseOption) {
-        purchaseOptionRepository.save(purchaseOption);
+    public PurchaseOption savePurchaseOption(PurchaseOption purchaseOption) {
+        return purchaseOptionRepository.save(purchaseOption);
     }
 
     public PurchaseOption getPurchaseOptionById(UUID id) {
