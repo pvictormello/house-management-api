@@ -3,6 +3,8 @@ package house.management.api.model;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.annotations.GeneratedColumn;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import house.management.api.model.dto.RoomRequest;
@@ -33,9 +35,11 @@ public class Room {
     public Room() {
     }
     
-    public Room(UUID id, String name) {
+    public Room(UUID id, String slug, String name, List<Item> items) {
         this.id = id;
+        this.slug = slug;
         this.name = name;
+        this.items = items;
     }
 
     public Room(UUID id) {

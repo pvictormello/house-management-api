@@ -30,11 +30,15 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveRoom(@Valid @RequestBody RoomRequest request) {
+    public ResponseEntity<Room> saveRoom(@RequestBody RoomRequest request) {
+        Room roomToSave = new Room(request);
+        Room savedRoom = roomService.saveRoom(roomToSave);
 
-        roomService.saveRoom(new Room(request));
+        if(savedRoom == null){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedRoom);
     }
 
     @GetMapping
