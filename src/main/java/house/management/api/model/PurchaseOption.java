@@ -1,6 +1,5 @@
 package house.management.api.model;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity(name = "purchase_options")
 public class PurchaseOption {
@@ -24,9 +24,6 @@ public class PurchaseOption {
 
     @Column(name = "url", columnDefinition = "TEXT", nullable = false)
     private String url;
-
-    @Column(name = "price", columnDefinition = "NUMERIC(10,2)", nullable = false)
-    private BigDecimal price;
     
     @Column(name = "is_favorite", nullable = false)
     private Boolean isFavorite;
@@ -36,26 +33,26 @@ public class PurchaseOption {
     @JsonIgnore
     private Item item;
 
-    @Column(name = "image_url", columnDefinition = "TEXT")
-    private String imageUrl;
+    @OneToOne
+    @JoinColumn(name = "metadata_id", referencedColumnName = "id")
+    private Metadata metadata;
 
     public PurchaseOption() {
     }
 
-    public PurchaseOption(UUID id, Item item, String url, BigDecimal price, Boolean isFavorite, String imageUrl) {
+    public PurchaseOption(UUID id, Item item, String url, Boolean isFavorite, Metadata metadata) {
         this.id = id;
         this.item = item;
         this.url = url;
-        this.price = price;
         this.isFavorite = isFavorite;
-        this.imageUrl = imageUrl;
+        this.metadata = metadata;
     }
 
-    public PurchaseOption(PurchaseOptionRequest request, Item item) {
+    public PurchaseOption(PurchaseOptionRequest request, Item item, Metadata metadata) {
         this.item = item;
         this.url = request.getUrl();
-        this.price = request.getPrice();
         this.isFavorite = false;
+        this.metadata = metadata;
     }
 
     public UUID getId() {
@@ -82,14 +79,6 @@ public class PurchaseOption {
         this.url = url;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public Boolean getIsFavorite() {
         return isFavorite;
     }
@@ -98,11 +87,11 @@ public class PurchaseOption {
         this.isFavorite = isFavorite;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public Metadata getMetadata() {
+        return metadata;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
     }
 }

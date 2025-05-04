@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import house.management.api.model.Item;
+import house.management.api.model.Metadata;
 import house.management.api.model.PurchaseOption;
 import house.management.api.model.dto.PurchaseOptionRequest;
 import house.management.api.services.ItemService;
@@ -45,10 +46,8 @@ public class PurchaseOptionController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        String imageUrl = metadataService.extractImageUrl(request.getUrl());
-        PurchaseOption purchaseOption = new PurchaseOption(request, item);
-
-        purchaseOption.setImageUrl(imageUrl);
+        Metadata metadata = metadataService.extractMetadata(request.getUrl());
+        PurchaseOption purchaseOption = new PurchaseOption(request, item, metadata);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(purchaseOptionService.savePurchaseOption(purchaseOption));
     }
