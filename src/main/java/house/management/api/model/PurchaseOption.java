@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import house.management.api.model.dto.PurchaseOptionRequest;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,7 +34,7 @@ public class PurchaseOption {
     @JsonIgnore
     private Item item;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "metadata_id", referencedColumnName = "id")
     private Metadata metadata;
 

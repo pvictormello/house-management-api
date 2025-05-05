@@ -29,7 +29,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
     @JsonIgnore
     private Room room;
