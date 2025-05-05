@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import house.management.api.config.JwtUtil;
 import house.management.api.model.User;
 import house.management.api.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -16,9 +17,11 @@ import jakarta.transaction.Transactional;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
     }
 
     public void saveUser(User user) {
@@ -47,5 +50,15 @@ public class UserService implements UserDetailsService {
 
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    public User getUserByToken(String token) {
+        String username = jwtUtil.extractUsername(token);
+        if (username == null) {
+            return null;
+        }
+
+        return userRepository.findByUsername(username)
+                .orElse(null); 
     }
 }

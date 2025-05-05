@@ -37,22 +37,28 @@ public class PurchaseOption {
     @JoinColumn(name = "metadata_id", referencedColumnName = "id")
     private Metadata metadata;
 
+    @OneToOne
+    @JoinColumn(name = "created_by", referencedColumnName = "id")
+    private User user;
+
     public PurchaseOption() {
     }
 
-    public PurchaseOption(UUID id, Item item, String url, Boolean isFavorite, Metadata metadata) {
+    public PurchaseOption(UUID id, String url, Boolean isFavorite, Item item, Metadata metadata, User user) {
         this.id = id;
-        this.item = item;
         this.url = url;
         this.isFavorite = isFavorite;
+        this.item = item;
         this.metadata = metadata;
+        this.user = user;
     }
 
-    public PurchaseOption(PurchaseOptionRequest request, Item item, Metadata metadata) {
+    public PurchaseOption(PurchaseOptionRequest request, Item item, Metadata metadata, User user) {
         this.item = item;
         this.url = request.getUrl();
         this.isFavorite = false;
         this.metadata = metadata;
+        this.user = user;
     }
 
     public UUID getId() {
@@ -94,4 +100,13 @@ public class PurchaseOption {
     public void setMetadata(Metadata metadata) {
         this.metadata = metadata;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
