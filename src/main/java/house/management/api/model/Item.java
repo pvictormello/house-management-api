@@ -1,5 +1,6 @@
 package house.management.api.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,6 +67,7 @@ public class Item {
         this.description = request.getDescription();
         this.priority = request.getPriority();
         this.isPurchased = false;
+        this.purchaseOptions = new ArrayList<>();
     }
 
     public UUID getId() {
