@@ -2,7 +2,7 @@ package house.management.api.model.dto;
 
 import java.util.UUID;
 
-public record PurchaseOptionRequest(UUID itemId, String url) {
+public record PurchaseOptionRequest(UUID itemId, String url, MetadataRequest metadata) {
     
     public PurchaseOptionRequest {
         if(itemId == null) {
@@ -21,6 +21,10 @@ public record PurchaseOptionRequest(UUID itemId, String url) {
 
     public String getUrl() {
         return url;
+    }
+    
+    public MetadataRequest getMetadata() {
+        return metadata;
     }
 
 }
