@@ -26,8 +26,4 @@ public class ItemService {
     public void deleteItem(UUID id) {
         itemRepository.deleteById(id);
     }
-
-    public void updateItem(Item item) {
-        itemRepository.save(item);
-    }
 }

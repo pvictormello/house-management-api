@@ -52,7 +52,7 @@ public class ItemController {
         Item item = itemService.getItemById(itemId);
         if (item != null) {
             item.setIsPurchased(!item.getIsPurchased());
-            itemService.updateItem(item);
+            itemService.saveItem(item);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
@@ -71,7 +71,7 @@ public class ItemController {
     }
 
     @PutMapping("/{itemId}")
-    public ResponseEntity<Void> updateItem(@PathVariable UUID itemId, @RequestBody ItemRequest request) {
+    public ResponseEntity<Item> updateItem(@PathVariable UUID itemId, @RequestBody ItemRequest request) {
         Item item = itemService.getItemById(itemId);
 
         if(item == null) {
@@ -86,9 +86,8 @@ public class ItemController {
             itemToUpdate.setId(itemId);
             itemToUpdate.setRoom(room);
             itemToUpdate.setIsPurchased(item.getIsPurchased());
-            itemService.updateItem(itemToUpdate);
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(itemService.saveItem(itemToUpdate));
         }
     }
 }
