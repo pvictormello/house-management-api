@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 
 @Entity(name = "rooms")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -28,6 +29,7 @@ public class Room {
     private String slug;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("createdAt ASC")
     private List<Item> items;
 
     public Room() {

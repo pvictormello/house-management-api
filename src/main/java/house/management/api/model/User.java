@@ -47,7 +47,7 @@ public class User implements UserDetails {
     private Role role;  // Enum: USER, ADMIN
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;    
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public User() {
     }
@@ -56,8 +56,8 @@ public class User implements UserDetails {
         this.username = request.getUsername();
         this.email = request.getEmail();
         this.name = request.getName();
-        this.role = Role.USER;  // Default role
-        this.createdAt = LocalDateTime.now();  // Set createdAt to current time
+        this.role = Role.USER;
+        this.createdAt = LocalDateTime.now();
     }
 
     public UUID getId() {

@@ -1,5 +1,6 @@
 package house.management.api.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.validation.constraints.NotNull;
 
 @Entity(name = "items")
@@ -47,13 +49,17 @@ public class Item {
     @Column(name = "is_purchased")
     private Boolean isPurchased;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
+
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("createdAt ASC")
     private List<PurchaseOption> purchaseOptions;
 
     public Item() {
     }
 
-    public Item(UUID id, Room room, String name, String description, Priority priority, Boolean isPurchased) {
+    public Item(UUID id, Room room, String name, String description, Priority priority, Boolean isPurchased ) {
         this.id = id;
         this.room = room;
         this.name = name;
@@ -124,5 +130,13 @@ public class Item {
 
     public void setPurchaseOptions(List<PurchaseOption> purchaseOptions) {
         this.purchaseOptions = purchaseOptions;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
