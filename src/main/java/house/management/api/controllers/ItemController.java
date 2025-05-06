@@ -85,6 +85,7 @@ public class ItemController {
             }
             itemToUpdate.setId(itemId);
             itemToUpdate.setRoom(room);
+            itemToUpdate.setPurchaseOptions(item.getPurchaseOptions());
             itemToUpdate.setIsPurchased(item.getIsPurchased());
 
             return ResponseEntity.ok().body(itemService.saveItem(itemToUpdate));
