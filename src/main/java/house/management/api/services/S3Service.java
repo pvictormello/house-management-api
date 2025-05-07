@@ -23,10 +23,10 @@ public class S3Service {
     private final S3Client s3Client;
     private final String bucketName;
 
-    public S3Service(@Value("${aws.s3.bucket-name}") String bucketName,
-            @Value("${aws.accessKeyId}") String accessKey,
-            @Value("${aws.secretKey}") String secretKey,
-            @Value("${aws.region}") String region) {
+    public S3Service(@Value("${AWS_S3_BUCKET_NAME}") String bucketName,
+            @Value("${AWS_ACCESS_KEY_ID}") String accessKey,
+            @Value("${AWS_SECRET_KEY}") String secretKey,
+            @Value("${AWS_REGION}") String region) {
         this.bucketName = bucketName;
         s3Client = S3Client.builder()
                 .region(Region.of(region))
