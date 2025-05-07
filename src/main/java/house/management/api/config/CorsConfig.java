@@ -12,19 +12,19 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class CorsConfig {
 
-    @Value("${cors.allowed.origins}") // Set in application-dev.properties/prod.properties
+    @Value("${cors.allowed.origins}")
     private String[] allowedOrigins;
 
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList(allowedOrigins)); // Allow all origins
-        config.addAllowedHeader("*"); // Allow all headers
-        config.addAllowedMethod("*"); // Allow all HTTP methods
-        config.setAllowCredentials(false); // Allow credentials (optional)
+        config.setAllowedOrigins(Arrays.asList(allowedOrigins));
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.setAllowCredentials(false);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config); // Apply CORS settings to all endpoints
+        source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 }
