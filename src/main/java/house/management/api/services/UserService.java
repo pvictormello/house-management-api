@@ -7,9 +7,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import house.management.api.config.JwtUtil;
 import house.management.api.model.User;
 import house.management.api.repository.UserRepository;
+import house.management.api.util.JwtUtil;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -24,8 +24,8 @@ public class UserService implements UserDetailsService {
         this.jwtUtil = jwtUtil;
     }
 
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
     public User getUserById(UUID id) {

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import house.management.api.services.UserService;
+import house.management.api.util.JwtUtil;
 
 import java.io.IOException;
 

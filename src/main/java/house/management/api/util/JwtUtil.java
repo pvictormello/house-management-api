@@ -1,4 +1,4 @@
-package house.management.api.config;
+package house.management.api.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
 @RestController
 @RequestMapping("/items")
 public class ItemController {
@@ -43,7 +42,7 @@ public class ItemController {
 
         Item itemToSave = new Item(request);
         itemToSave.setRoom(room);
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body(itemService.saveItem(itemToSave));
     }
 
@@ -74,13 +73,13 @@ public class ItemController {
     public ResponseEntity<Item> updateItem(@PathVariable UUID itemId, @RequestBody ItemRequest request) {
         Item item = itemService.getItemById(itemId);
 
-        if(item == null) {
+        if (item == null) {
             return ResponseEntity.notFound().build();
-        } else{
+        } else {
             Item itemToUpdate = new Item(request);
             Room room = roomService.getRoomById(request.getRoomId());
 
-            if(room == null){
+            if (room == null) {
                 return ResponseEntity.notFound().build();
             }
             itemToUpdate.setId(itemId);

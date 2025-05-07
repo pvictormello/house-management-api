@@ -1,6 +1,7 @@
 package house.management.api.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +24,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity(name = "users")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User implements UserDetails {
 
     @Id
@@ -44,10 +45,13 @@ public class User implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role;  // Enum: USER, ADMIN
+    private Role role; // Enum: USER, ADMIN
 
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now(ZoneId.systemDefault());
+
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
 
     public User() {
     }
@@ -57,7 +61,6 @@ public class User implements UserDetails {
         this.email = request.getEmail();
         this.name = request.getName();
         this.role = Role.USER;
-        this.createdAt = LocalDateTime.now();
     }
 
     public UUID getId() {
@@ -116,10 +119,42 @@ public class User implements UserDetails {
         this.createdAt = createdAt;
     }
 
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return true;
     }
 
 }

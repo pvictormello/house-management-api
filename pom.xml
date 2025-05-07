@@ -89,6 +89,11 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.17.2</version>
 		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>s3</artifactId>
+			<version>2.20.52</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
