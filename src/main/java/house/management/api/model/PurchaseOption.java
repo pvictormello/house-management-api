@@ -38,7 +38,7 @@ public class PurchaseOption {
     @JsonIgnore
     private Item item;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "metadata_id", referencedColumnName = "id")
     private Metadata metadata;
 
