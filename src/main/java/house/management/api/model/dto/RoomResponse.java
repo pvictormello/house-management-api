@@ -9,6 +9,7 @@ import house.management.api.model.Room;
 public class RoomResponse {
 
     private String name;
+    private String slug;
     private BigDecimal favoriteCost;
     private BigDecimal cheapestCost;
     private Integer totalItems;
@@ -17,6 +18,7 @@ public class RoomResponse {
 
     public RoomResponse(Room room){
         this.name = room.getName();
+        this.slug = room.getSlug();
         this.favoriteCost = calculateFavoriteCost(room);
         this.cheapestCost = calculateCheapestCost(room);
         this.totalItems = calculateTotalItems(room);
@@ -72,6 +74,10 @@ public class RoomResponse {
 
     public String getName() {
         return name;
+    }
+
+    public String getSlug() {
+        return slug;
     }
 
     public BigDecimal getFavoriteCost() {
