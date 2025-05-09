@@ -38,6 +38,10 @@ public class Metadata {
         this.price = price;
     }
 
+    public Metadata(BigDecimal price) {
+        this.price = price;
+    }
+
     public UUID getId() {
         return id;
     }

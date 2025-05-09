@@ -3,6 +3,7 @@ package house.management.api.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import house.management.api.model.Room;
+import house.management.api.model.dto.RoomHome;
 import house.management.api.model.dto.RoomRequest;
 import house.management.api.services.RoomService;
 
@@ -41,8 +42,10 @@ public class RoomController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Room>> getRooms() {
-        return ResponseEntity.ok(roomService.getAllRooms());
+    public ResponseEntity<RoomHome> getRooms() {
+        List<Room> rooms = roomService.getAllRooms();
+        
+        return ResponseEntity.ok(new RoomHome(rooms));
     }
 
     @GetMapping("/{slug}")

@@ -2,6 +2,8 @@ package house.management.api.controllers;
 
 import house.management.api.services.S3Service;
 import house.management.api.services.UserService;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +23,9 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final S3Service s3Service;
+
+    @Value("${aws.s3.bucket-url}")
+    private String bucketUrl;
 
     UserController(UserService userService, PasswordEncoder passwordEncoder, S3Service s3Service) {
         this.userService = userService;
@@ -49,6 +54,8 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setProfileImageUrl(profileImageUrl);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(user));
+        user = userService.saveUser(user);
+        user.setProfileImageUrl(bucketUrl + "/" + user.getProfileImageUrl());
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 }

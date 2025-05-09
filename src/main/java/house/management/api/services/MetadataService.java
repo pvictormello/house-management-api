@@ -40,10 +40,16 @@ public class MetadataService {
                 .get();
 
         Metadata metadata = new Metadata();
-        String title = getMetaContent(doc, "title");
+        String title = doc.select("h1#title").first() != null ? doc.select("h1#title").first().text() : null;
 
+        if (title == null || title.isEmpty()) {
+            title = getMetaContent(doc, "title");
+        }
         if (title == null) {
             title = doc.title();
+        }
+        if (title != null && title.length() > 50) {
+            title = title.substring(0, 50);
         }
 
         metadata.setUrl(url);
@@ -62,7 +68,7 @@ public class MetadataService {
                 "[itemprop=price]",
                 ".price", ".product-price", ".price-value",
                 "[data-product-price]", ".current-price",
-                ".priceToPay", ".tr-productPrice__price", "[data-testid=price-value]"
+                "span.priceToPay", ".tr-productPrice__price", "[data-testid=price-value]"
         };
 
         for (String selector : priceSelectors) {
