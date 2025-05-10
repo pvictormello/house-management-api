@@ -3,7 +3,6 @@ package house.management.api.controllers;
 import house.management.api.services.S3Service;
 import house.management.api.services.UserService;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import house.management.api.model.User;
 import house.management.api.model.dto.UserRequest;
+import house.management.api.model.dto.UserResponse;
 
 @RestController
 @RequestMapping("/users")
@@ -24,9 +24,6 @@ public class UserController {
     private final UserService userService;
     private final S3Service s3Service;
 
-    @Value("${aws.s3.bucket-url}")
-    private String bucketUrl;
-
     UserController(UserService userService, PasswordEncoder passwordEncoder, S3Service s3Service) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
@@ -34,28 +31,33 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestPart("user") UserRequest request,
+    public ResponseEntity<UserResponse> registerUser(@RequestPart("user") UserRequest request,
             @RequestPart("file") MultipartFile profileImage) {
         if (userService.existsByUsername(request.getUsername()) || profileImage.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
         String prefix = request.getUsername();
-        String profileImageUrl;
+        String profileImageFileName;
         
         try {
-            profileImageUrl = s3Service.uploadFile(profileImage, prefix);
-
+            profileImageFileName = s3Service.uploadFile(profileImage, prefix);
         } catch (Exception e) {
-            profileImageUrl = null;
+            profileImageFileName = null;
         }
 
         User user = new User(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setProfileImageUrl(profileImageUrl);
+        user.setProfileImageUrl(profileImageFileName);
 
-        user = userService.saveUser(user);
-        user.setProfileImageUrl(bucketUrl + "/" + user.getProfileImageUrl());
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        User savedUser = userService.saveUser(user);
+        UserResponse response = new UserResponse(savedUser);
+        
+        // Set the full URL for the profile image in the response
+        if (savedUser.getProfileImageUrl() != null) {
+            response.setProfileImageUrl(s3Service.getFullImageUrl(savedUser.getProfileImageUrl()));
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

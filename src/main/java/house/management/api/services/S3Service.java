@@ -22,12 +22,15 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 public class S3Service {
     private final S3Client s3Client;
     private final String bucketName;
+    private final String bucketUrl;
 
     public S3Service(@Value("${aws.s3.bucket-name}") String bucketName,
             @Value("${aws.accessKeyId}") String accessKey,
             @Value("${aws.secretKey}") String secretKey,
-            @Value("${aws.region}") String region) {
+            @Value("${aws.region}") String region,
+            @Value("${aws.s3.bucket-url}") String bucketUrl) {
         this.bucketName = bucketName;
+        this.bucketUrl = bucketUrl;
         s3Client = S3Client.builder()
                 .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
@@ -63,6 +66,13 @@ public class S3Service {
         return fileName;
     }
 
+    public String getFullImageUrl(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return null;
+        }
+        return bucketUrl + "/" + fileName;
+    }
+
     @Cacheable("images")
     public byte[] getImage(String key) {
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
@@ -71,5 +81,4 @@ public class S3Service {
                 .build();
         return s3Client.getObject(getObjectRequest, ResponseTransformer.toBytes()).asByteArray();
     }
-
 }

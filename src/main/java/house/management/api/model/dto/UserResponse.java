@@ -39,9 +39,12 @@ public class UserResponse {
     public String getProfileImageUrl() {
         return this.profileImageUrl;
     }
+    
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 
     public LocalDateTime getCreatedAt() {
         return this.createdAt;
     }
-
 }
