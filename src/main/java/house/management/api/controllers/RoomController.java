@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import house.management.api.model.Room;
 import house.management.api.model.dto.RoomHome;
 import house.management.api.model.dto.RoomRequest;
+import house.management.api.model.dto.RoomResponse;
 import house.management.api.services.RoomService;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<Room> saveRoom(@RequestBody RoomRequest request) {
+    public ResponseEntity<RoomResponse> saveRoom(@RequestBody RoomRequest request) {
         Room roomToSave = new Room(request);
         Room savedRoom = roomService.saveRoom(roomToSave);
 
@@ -38,7 +39,7 @@ public class RoomController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedRoom);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new RoomResponse(savedRoom));
     }
 
     @GetMapping
@@ -68,6 +69,4 @@ public class RoomController {
             return ResponseEntity.notFound().build();
         }
     }
-    
-
 }

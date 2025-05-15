@@ -92,7 +92,6 @@ public class PurchaseOptionController {
     public ResponseEntity<Void> toggleIsFavorite(@PathVariable UUID purchaseOptionId) {
         PurchaseOption purchaseOption = purchaseOptionService.getPurchaseOptionById(purchaseOptionId);
         if (purchaseOption != null) {
-            purchaseOptionService.unmarkFavoritePurchaseOptionPerItem(purchaseOption.getItem().getId());
             purchaseOption.setIsFavorite(!purchaseOption.getIsFavorite());
             purchaseOptionService.savePurchaseOption(purchaseOption);
             return ResponseEntity.ok().build();
