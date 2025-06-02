@@ -33,32 +33,37 @@ public class MetadataService {
     }
 
     public Metadata extractMetadata(String url) throws IOException {
-        Document doc = Jsoup.connect(url)
-                .userAgent(
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-                .timeout(10000)
-                .get();
-
         Metadata metadata = new Metadata();
-        String title = doc.select("h1#title").first() != null ? doc.select("h1#title").first().text() : null;
+        try {
+            Document doc = Jsoup.connect(url)
+                    .userAgent(
+                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+                    .timeout(10000)
+                    .ignoreHttpErrors(true)
+                    .get();
 
-        if (title == null || title.isEmpty()) {
-            title = getMetaContent(doc, "title");
+            String title = doc.select("h1#title").first() != null ? doc.select("h1#title").first().text() : null;
+
+            if (title == null || title.isEmpty()) {
+                title = getMetaContent(doc, "title");
+            }
+            if (title == null) {
+                title = doc.title();
+            }
+            if (title != null && title.length() > 50) {
+                title = title.substring(0, 50);
+            }
+
+            metadata.setTitle(title);
+            metadata.setImageUrl(extractImageUrl(doc));
+            String price = getPrice(doc);
+            metadata.setPrice(price != null ? convertMoneyStringToBigDecimal(price) : null);
+            metadata.setUrl(url);
+
+        } catch (Exception ex) {
+            metadata.setUrl(url);
+            return saveMetadata(metadata);
         }
-        if (title == null) {
-            title = doc.title();
-        }
-        if (title != null && title.length() > 50) {
-            title = title.substring(0, 50);
-        }
-
-        metadata.setUrl(url);
-        metadata.setTitle(title);
-        metadata.setImageUrl(extractImageUrl(doc));
-
-        String price = getPrice(doc);
-
-        metadata.setPrice(price != null ? convertMoneyStringToBigDecimal(price) : null);
 
         return saveMetadata(metadata);
     }
@@ -68,7 +73,8 @@ public class MetadataService {
                 "[itemprop=price]",
                 ".price", ".product-price", ".price-value",
                 "[data-product-price]", ".current-price",
-                "span.priceToPay", ".tr-productPrice__price", "[data-testid=price-value]"
+                "span.priceToPay", ".tr-productPrice__price", "[data-testid=price-value]",
+                "span.text-2xl.font-bold.text-default"
         };
 
         for (String selector : priceSelectors) {

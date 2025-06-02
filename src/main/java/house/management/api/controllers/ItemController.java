@@ -87,7 +87,7 @@ public class ItemController {
             itemToUpdate.setPurchaseOptions(item.getPurchaseOptions());
             itemToUpdate.setIsPurchased(item.getIsPurchased());
             itemToUpdate.setCreatedAt(item.getCreatedAt());
-
+            
             return ResponseEntity.ok().body(itemService.saveItem(itemToUpdate));
         }
     }

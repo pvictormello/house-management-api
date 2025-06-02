@@ -52,20 +52,24 @@ public class Item {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    private String category;
+    
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy("createdAt ASC")
     private List<PurchaseOption> purchaseOptions;
 
+
     public Item() {
     }
 
-    public Item(UUID id, Room room, String name, String description, Priority priority, Boolean isPurchased ) {
+    public Item(UUID id, Room room, String name, String description, Priority priority, Boolean isPurchased, String category) {
         this.id = id;
         this.room = room;
         this.name = name;
         this.description = description;
         this.priority = priority;
         this.isPurchased = isPurchased;
+        this.category = category;
     }
 
     public Item(ItemRequest request) {
@@ -74,6 +78,7 @@ public class Item {
         this.priority = request.getPriority();
         this.isPurchased = false;
         this.purchaseOptions = new ArrayList<>();
+        this.category = request.getCategory();
     }
 
     public UUID getId() {
@@ -138,5 +143,13 @@ public class Item {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
